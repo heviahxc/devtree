@@ -1,3 +1,9 @@
 
 #Express para levantar servidor
 #Nodemon para tener el servidor escuchando los cambios
+#bcrypt para hashear password
+#colors para editar mensajes de la terminal
+#express-validator para manejar validaciones
+#moongose para trabajar con mongodb
+#slug para evitar caracteres y espacios en el username´´
+#ts-node typescript
