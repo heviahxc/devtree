@@ -2,6 +2,7 @@ import User from "../models/user";
 import { Request, Response } from 'express';
 import { checkPassword, hashPassword } from "../utils/auth";
 import slug from 'slug';
+import { generateToken } from "../utils/jwt";
 
 
 export const createAccount = async (req: Request, res: Response) => {
@@ -10,32 +11,31 @@ export const createAccount = async (req: Request, res: Response) => {
 
 
 
-const {email, password} = req.body;
+const {email, password, name, handle} = req.body;
 
 const userExists = await User.findOne({email});
 
 if(userExists){
-     res.status(400).send('El email ya existe');
+     res.status(400).json({error: 'El email ya existe'});
      return
 }
 
-const handle = slug(req.body.handle,'');
-const handleExists = await User.findOne({handle: slug(handle)});
+const handleFormatted = slug(handle,'');
+const handleExists = await User.findOne({handle: handleFormatted});
 if(handleExists){
-     res.status(400).send('El usuario ya existe');
+     res.status(400).json({error: 'El usuario ya existe'});
      return;
 }
 
 
-const user = new User(req.body);
+const user = new User({name, email, handle: handleFormatted, password});
 const hashedPassword = await hashPassword(password);
 user.password = hashedPassword;     
 
 
-user.handle = handle
     await  user.save();
 
-    res.status(201).send('Usuario creado correctamente');
+    res.status(201).json({message: 'Usuario creado correctamente'});
 
 }       
 
@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
 const user= await User.findOne({email});
 
 if(!user){
-     res.status(401).send('El usuario no existe');
+     res.status(401).json({error: 'El usuario no existe'});
      return
 }
 
@@ -59,10 +59,12 @@ const isPasswordCorrect = await checkPassword(password, user.password);
 
 
 if(!isPasswordCorrect){
-     res.status(401).send('Contraseña incorrecta');
+     res.status(401).json({error: 'Contraseña incorrecta'});
      return
 }   
 
-res.status(200).send('Login exitoso');
+const token = generateToken({id: user._id});
+
+res.status(200).json({message: 'Login exitoso', token});
 
 }

@@ -1,12 +1,18 @@
 
 //import
 import express from "express";
+import cors from 'cors';
 import 'dotenv/config'
 import router from "./router"
 import {connectDB} from './config/db'
+import { corsConfig } from "./config/cors";
 
 //instancia de express
 const app = express();
+
+app.use(cors(corsConfig));
+app.use(express.json());
+
 connectDB();
 //routing
 app.use('/api', router);
