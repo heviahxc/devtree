@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { checkPassword, hashPassword } from "../utils/auth";
 import slug from 'slug';
 import { generateToken } from "../utils/jwt";
+import jwt from 'jsonwebtoken';
 
 
 export const createAccount = async (req: Request, res: Response) => {
@@ -68,3 +69,8 @@ const token = generateToken({id: user._id});
 res.status(200).json({message: 'Login exitoso', token});
 
 }
+
+
+export const getUser = async (req: Request, res: Response) => {
+     res.json(req.user);
+}    

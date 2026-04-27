@@ -38,140 +38,142 @@ export default function RegisterView() {
      }
     }
   };
-  return (
-    <>
-      <h1 className="text-4xl text-white font-bold">Crear Cuenta</h1>
-      <form
-        onSubmit={handleSubmit(handleRegister)}
-        className="bg-white px-5 py-20 rounded-lg space-y-10 mt-10"
-      >
-        <div className="space-y-2">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Nombre completo
-          </label>
-          <input
-            id="name"
-            type="text"
-            placeholder="Tu Nombre"
-            className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-lg placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-400 transition-colors"
-            {...register("name", { required: "El nombre es requerido" })}
-          />
-          {errors.name && <ErrorMessage> {errors.name.message} </ErrorMessage>}
-        </div>
+return (
+  <>
+    <h1 className="text-3xl font-semibold text-gray-800 text-center">
+      Crear cuenta
+    </h1>
 
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Email de Registro"
-            className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-lg placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-400 transition-colors"
-            {...register("email", {
-              required: "El email es requerido",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Email inválido",
-              },
-            })}
-          />
-          {errors.email && (
-            <ErrorMessage> {errors.email.message} </ErrorMessage>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="handle"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Handle
-          </label>
-          <input
-            id="handle"
-            type="text"
-            placeholder="Nombre de usuario: sin espacios"
-            className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-lg placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-400 transition-colors"
-            {...register("handle", { required: "El handle es requerido" })}
-          />
-          {errors.handle && (
-            <ErrorMessage> {errors.handle.message} </ErrorMessage>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Password de Registro"
-            className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-lg placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-400 transition-colors"
-            {...register("password", {
-              required: "La contraseña es requerida",
-              minLength: {
-                value: 6,
-                message: "La contraseña debe tener al menos 6 caracteres",
-              },
-            })}
-          />
-          {errors.password && (
-            <ErrorMessage> {errors.password.message} </ErrorMessage>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="password_confirmation"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Repetir Password
-          </label>
-          <input
-            id="password_confirmation"
-            type="password"
-            placeholder="Repetir Password"
-            className="w-full px-4 py-2.5 bg-slate-50 text-slate-900 border-2 border-slate-200 rounded-lg placeholder-slate-400 focus:outline-none focus:bg-white focus:border-cyan-400 transition-colors"
-            {...register("password_confirmation", {
-              required: "La confirmación de la contraseña es requerida",
-              validate: (value) =>
-                value === password || "Las contraseñas no coinciden",
-            })}
-          />
-          {errors.password_confirmation && (
-            <ErrorMessage>
-              {" "}
-              {errors.password_confirmation.message}{" "}
-            </ErrorMessage>
-          )}
-        </div>
-
-        <input
-          type="submit"
-          className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:shadow-lg hover:shadow-cyan-400/30 p-3 text-lg text-white rounded-lg font-bold cursor-pointer transition-all active:scale-95"
-          value="Crear Cuenta"
-        />
-      </form>
-
-      <nav>
-        <Link
-          className="text-center text-gray-400 text-lg block mt-5"
-          to="/auth/login"
+    <form
+      onSubmit={handleSubmit(handleRegister)}
+      className="bg-white mt-8 px-6 py-8 rounded-xl border border-gray-200 space-y-6"
+    >
+      <div className="flex flex-col space-y-2">
+        <label
+          htmlFor="name"
+          className="text-sm font-medium text-gray-600"
         >
-          ¿Ya tienes cuenta? Inicia sesión
-        </Link>
-      </nav>
-    </>
-  );
+          Nombre completo
+        </label>
+        <input
+          id="name"
+          type="text"
+          placeholder="Tu nombre"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          {...register("name", { required: "El nombre es requerido" })}
+        />
+        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <label
+          htmlFor="email"
+          className="text-sm font-medium text-gray-600"
+        >
+          Correo electrónico
+        </label>
+        <input
+          id="email"
+          type="email"
+          placeholder="Email de registro"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          {...register("email", {
+            required: "El email es requerido",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Email inválido",
+            },
+          })}
+        />
+        {errors.email && (
+          <ErrorMessage>{errors.email.message}</ErrorMessage>
+        )}
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <label
+          htmlFor="handle"
+          className="text-sm font-medium text-gray-600"
+        >
+          Handle
+        </label>
+        <input
+          id="handle"
+          type="text"
+          placeholder="Nombre de usuario: sin espacios"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          {...register("handle", { required: "El handle es requerido" })}
+        />
+        {errors.handle && (
+          <ErrorMessage>{errors.handle.message}</ErrorMessage>
+        )}
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-gray-600"
+        >
+          Contraseña
+        </label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Password de registro"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          {...register("password", {
+            required: "La contraseña es requerida",
+            minLength: {
+              value: 6,
+              message: "La contraseña debe tener al menos 6 caracteres",
+            },
+          })}
+        />
+        {errors.password && (
+          <ErrorMessage>{errors.password.message}</ErrorMessage>
+        )}
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <label
+          htmlFor="password_confirmation"
+          className="text-sm font-medium text-gray-600"
+        >
+          Repetir contraseña
+        </label>
+        <input
+          id="password_confirmation"
+          type="password"
+          placeholder="Repetir contraseña"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+          {...register("password_confirmation", {
+            required: "La confirmación de la contraseña es requerida",
+            validate: (value) =>
+              value === password || "Las contraseñas no coinciden",
+          })}
+        />
+        {errors.password_confirmation && (
+          <ErrorMessage>
+            {errors.password_confirmation.message}
+          </ErrorMessage>
+        )}
+      </div>
+
+      <input
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-md transition cursor-pointer"
+        value="Crear cuenta"
+      />
+    </form>
+
+    <nav className="mt-6">
+      <Link
+        className="block text-center text-sm text-gray-500 hover:text-blue-600 transition"
+        to="/auth/login"
+      >
+        ¿Ya tienes cuenta? Inicia sesión
+      </Link>
+    </nav>
+  </>
+);
 }
