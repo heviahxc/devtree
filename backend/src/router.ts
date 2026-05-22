@@ -1,7 +1,7 @@
 
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { createAccount, getUser, login } from './handlers';
+import { createAccount, getUser, login, updateProfile } from './handlers';
 import { handleInputErrors } from './middleware/validation';
 import { authenticate } from './middleware/auth';
 
@@ -22,6 +22,11 @@ router.post('/auth/login',
     login);
     
 router.get('/user',authenticate,getUser)
+router.patch('/user',
+    body('description').isLength({ min: 10 }).withMessage('La descripción debe tener al menos 10 caracteres'),
+    body('handle').isLength({ min: 3 }).withMessage('El usuario debe tener al menos 3 caracteres'),
+    handleInputErrors,
+    authenticate,updateProfile)
     
 export default router;
 
